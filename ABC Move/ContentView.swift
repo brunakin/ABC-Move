@@ -8,14 +8,36 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var isActive: Bool = false
+    
     var body: some View {
-        VStack {
-            Image("Logo")
+        ZStack{
+            if self.isActive{
+                Menu()
+            } else {
+                Color("RoxoClaro").ignoresSafeArea()
+                VStack {
+                    Image("Logo")
+                }
+                .padding()
+            }
         }
-        .padding()
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                withAnimation {
+                    self.isActive = true
+                }
+            }
+        }
     }
 }
+   
+//#Preview {
+//    ContentView()
+//}
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
